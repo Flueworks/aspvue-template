@@ -17,15 +17,16 @@ namespace School.Dto
         {
             return new TeacherDto()
             {
-                // Automapper or something?
                 DateOfBirth = teacher.DateOfBirth,
                 FamilyName = teacher.FamilyName,
                 GivenName = teacher.GivenName,
                 TeacherId = teacher.TeacherId,
                 Age = teacher.Age(_clock.InTzdbSystemDefaultZone().GetCurrentDate()),
+                Address = teacher.Address
             };
         }
     }
+
 
     public class StudentDtoFactory
     {
@@ -40,12 +41,12 @@ namespace School.Dto
         {
             return new StudentDto()
             {
-                // Automapper or something?
                 DateOfBirth = student.DateOfBirth,
                 FamilyName = student.FamilyName,
                 GivenName = student.GivenName,
                 StudentId = student.StudentId,
                 Age = student.Age(_clock.InTzdbSystemDefaultZone().GetCurrentDate()),
+                Address = student.Address
             };
         }
     }

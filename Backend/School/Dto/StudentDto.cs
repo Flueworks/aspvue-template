@@ -3,14 +3,9 @@ using School.Entity;
 
 namespace School.Dto
 {
-    public class StudentDto
+    public class StudentDto : PersonDto
     {
         public int StudentId { get; set; }
-        public string GivenName { get; set; }
-        public string FamilyName { get; set; }
-
-        public LocalDate DateOfBirth { get; set; }
-        public int Age { get; set; }
     }
 
     public class GradeDto

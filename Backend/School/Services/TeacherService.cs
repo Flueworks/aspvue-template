@@ -39,6 +39,7 @@ namespace School.Services
                 FamilyName = teacherInput.FamilyName,
                 GivenName = teacherInput.GivenName,
                 DateOfBirth = teacherInput.DateOfBirth,
+                Address = teacherInput.Address,
             };
 
             _dbContext.Teachers.Add(teacher);
@@ -56,6 +57,7 @@ namespace School.Services
             teacher.DateOfBirth = teacherInput.DateOfBirth;
             teacher.FamilyName = teacher.FamilyName;
             teacher.GivenName = teacher.GivenName;
+            teacher.Address = teacherInput.Address;
 
             // save changes
             await _dbContext.SaveChangesAsync();
@@ -66,7 +68,7 @@ namespace School.Services
         public async Task<IReadOnlyCollection<TeacherDto>> GetAll()
         {
             var teachers = await _dbContext.Teachers.ToListAsync();
-            return teachers.Select(t => _dtoFactory.CreateDto(t)).ToList();
+            return teachers.ConvertAll(t => _dtoFactory.CreateDto(t));
         }
 
         public async Task<TeacherDto> Get(int teacherId)

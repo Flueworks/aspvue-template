@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Web.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class TeacherController : ControllerBase
     {
         private readonly ITeacherService _service;
@@ -35,8 +35,6 @@ namespace Web.Api.Controllers
         public async Task<ActionResult<TeacherDto>> Get(int id)
         {
             var teacher = await _service.Get(id);
-            if (teacher == null)
-                return NotFound();
             return Ok(teacher);
         }
 
@@ -55,8 +53,6 @@ namespace Web.Api.Controllers
         public async Task<ActionResult<TeacherDto>> Update(int id, [FromBody] TeacherInputDto update)
         {
             var dto = await _service.Update(id, update);
-            if (dto == null)
-                return NotFound();
             return Ok(dto);
         }
 

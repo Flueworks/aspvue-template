@@ -2,10 +2,13 @@
 
 namespace School.Dto
 {
-    public class TeacherInputDto
+    public class TeacherInputDto : PersonDto
     {
-        public string GivenName { get; set; }
-        public string FamilyName { get; set; }
-        public LocalDate DateOfBirth { get; set; }
+
+    }
+
+    public class StudentInputDto : PersonDto
+    {
+
     }
 }

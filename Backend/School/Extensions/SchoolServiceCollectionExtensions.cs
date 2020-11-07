@@ -10,7 +10,10 @@ namespace School.Extensions
         {
             services.AddScoped<ITeacherService, TeacherService>();
             services.AddScoped<ISchoolService, SchoolService>();
+            services.AddScoped<IStudentService, StudentService>();
+
             services.AddScoped<TeacherDtoFactory>();
+            services.AddScoped<StudentDtoFactory>();
             return services;
         }
     }
