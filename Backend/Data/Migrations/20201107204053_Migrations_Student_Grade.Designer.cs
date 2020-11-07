@@ -4,14 +4,16 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201107204053_Migrations_Student_Grade")]
+    partial class Migrations_Student_Grade
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,62 +153,11 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("School.Entity.Student", b =>
-                {
-                    b.OwnsOne("School.Entity.Address", "Address", b1 =>
-                        {
-                            b1.Property<int>("StudentId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<string>("Lines")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("PostalCode")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("PostalPlace")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("StudentId");
-
-                            b1.ToTable("Students");
-
-                            b1.WithOwner()
-                                .HasForeignKey("StudentId");
-                        });
-                });
-
             modelBuilder.Entity("School.Entity.Teacher", b =>
                 {
                     b.HasOne("School.Entity.School", "School")
                         .WithMany("Teachers")
                         .HasForeignKey("SchoolId");
-
-                    b.OwnsOne("School.Entity.Address", "Address", b1 =>
-                        {
-                            b1.Property<int>("TeacherId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<string>("Lines")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("PostalCode")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("PostalPlace")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("TeacherId");
-
-                            b1.ToTable("Teachers");
-
-                            b1.WithOwner()
-                                .HasForeignKey("TeacherId");
-                        });
                 });
 #pragma warning restore 612, 618
         }

@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using School;
 using School.Dto;
-using School.Entity;
 using School.Services;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Web.Api.Controllers
 {
@@ -37,13 +35,14 @@ namespace Web.Api.Controllers
         public async Task<ActionResult<TeacherDto>> Get(int id)
         {
             var teacher = await _service.Get(id);
-            if(teacher == null)
+            if (teacher == null)
                 return NotFound();
             return Ok(teacher);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<TeacherDto>> Add(TeacherInputDto input)
         {
             var dto = await _service.Add(input);
@@ -53,7 +52,7 @@ namespace Web.Api.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<TeacherDto>> Update(int id, [FromBody]TeacherInputDto update)
+        public async Task<ActionResult<TeacherDto>> Update(int id, [FromBody] TeacherInputDto update)
         {
             var dto = await _service.Update(id, update);
             if (dto == null)

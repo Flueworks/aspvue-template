@@ -9,6 +9,8 @@ namespace School.Entity
         DbSet<Teacher> Teachers { get; set; }
         DbSet<School> Schools { get; set; }
 
+        DbSet<Student> Students { get; set; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken());
     }
 }

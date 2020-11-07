@@ -29,6 +29,9 @@ namespace Data
 
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<School.Entity.School> Schools { get; set; }
+        public DbSet<Student> Students { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
