@@ -1,17 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Data;
+using Data.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using NodaTime;
+using NodaTime.Serialization.SystemTextJson;
+using School.Extensions;
 
-namespace Backend
+namespace Web.Api
 {
     public class Startup
     {
@@ -25,7 +24,20 @@ namespace Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(opt => opt.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb));
+            services.AddOpenApiDocument();
+
+            // Nodatime
+            services.AddSingleton<IClock>(SystemClock.Instance);
+
+
+            // Data storage
+            services.AddEntityFrameworkStorage(Configuration.GetConnectionString("DataContext"));
+
+            // Services
+            services.AddSchoolServices();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +48,7 @@ namespace Backend
                 app.UseDeveloperExceptionPage();
             }
 
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -46,6 +59,11 @@ namespace Backend
             {
                 endpoints.MapControllers();
             });
+
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
+
         }
     }
 }
