@@ -14,6 +14,8 @@ namespace School.Extensions
 
             services.AddScoped<TeacherDtoFactory>();
             services.AddScoped<StudentDtoFactory>();
+            services.AddScoped<SchoolDtoFactory>();
+
             return services;
         }
     }

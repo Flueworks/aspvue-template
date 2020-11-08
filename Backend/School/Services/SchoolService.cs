@@ -10,92 +10,73 @@ namespace School.Services
 {
     public interface ISchoolService
     {
+        Task<IReadOnlyCollection<SchoolDto>> GetAll();
+        Task<SchoolDto> Get(int id);
+        Task<SchoolDto> Add(SchoolInputDto input);
+        Task<SchoolDto> Update(int id, SchoolInputDto update);
+        Task Delete(int id);
     }
 
     public class SchoolService : ISchoolService
     {
-
-    }
-
-    public interface IStudentService
-    {
-        Task<StudentDto> Add(StudentInputDto studentInput);
-
-        Task<StudentDto> Update(int studentId, StudentInputDto studentInput);
-
-        Task<IReadOnlyCollection<StudentDto>> GetAll();
-
-        Task<StudentDto> Get(int studentId);
-
-        Task Delete(int studentId);
-
-    }
-
-    public class StudentService : IStudentService
-    {
         private readonly ISchoolDbContext _dbContext;
-        private readonly StudentDtoFactory _dtoFactory;
+        private readonly SchoolDtoFactory _dtoFactory;
 
-        public StudentService(ISchoolDbContext dbContext, StudentDtoFactory dtoFactory)
+        public SchoolService(ISchoolDbContext dbContext, SchoolDtoFactory dtoFactory)
         {
             _dbContext = dbContext;
             _dtoFactory = dtoFactory;
         }
 
-        public async Task<StudentDto> Add(StudentInputDto studentInput)
+        public async Task<IReadOnlyCollection<SchoolDto>> GetAll()
         {
-            var student = new Student()
+            var schools = await _dbContext.Schools.ToListAsync();
+            return schools.ConvertAll(_dtoFactory.CreateDto);
+        }
+
+        public async Task<SchoolDto> Get(int id)
+        {
+            var school = await _dbContext.Schools.FirstOrDefaultAsync(x => x.SchoolId == id);
+            if(school == null) throw new NotFoundException();
+            return _dtoFactory.CreateDto(school);
+        }
+
+        public async Task<SchoolDto> Add(SchoolInputDto input)
+        {
+            var school = new Entity.School()
             {
-                GivenName = studentInput.GivenName,
-                FamilyName = studentInput.FamilyName,
-                DateOfBirth = studentInput.DateOfBirth,
-                Address = studentInput.Address,
+                Name = input.Name,
+                Address = input.Address,
             };
+            await _dbContext.Schools.AddAsync(school);
 
-            await _dbContext.Students.AddAsync(student);
+            await _dbContext.SaveChangesAsync();
+            return _dtoFactory.CreateDto(school);
+        }
+
+        public async Task<SchoolDto> Update(int id, SchoolInputDto update)
+        {
+            var school = await _dbContext.Schools.FirstOrDefaultAsync(x => x.SchoolId == id);
+            if(school == null) throw new NotFoundException();
+
+            school.Name = update.Name;
+            school.Address = update.Address;
 
             await _dbContext.SaveChangesAsync();
 
-            return _dtoFactory.CreateDto(student);
+            return _dtoFactory.CreateDto(school);
         }
 
-        public async Task<StudentDto> Update(int studentId, StudentInputDto studentInput)
+        public async Task Delete(int id)
         {
-            var student = await _dbContext.Students.FirstOrDefaultAsync(x => x.StudentId == studentId);
-            if(student == null) throw new NotFoundException();
+            var school = await _dbContext.Schools.FirstOrDefaultAsync(x => x.SchoolId == id);
+            if(school == null) throw new NotFoundException();
 
-            student.GivenName = studentInput.GivenName;
-            student.FamilyName = studentInput.FamilyName;
-            student.DateOfBirth = studentInput.DateOfBirth;
-            student.Address = studentInput.Address;
-
-            await _dbContext.SaveChangesAsync();
-
-            return _dtoFactory.CreateDto(student);
-        }
-
-        public async Task<IReadOnlyCollection<StudentDto>> GetAll()
-        {
-            var students = await _dbContext.Students.ToListAsync();
-
-            return students.ConvertAll(x => _dtoFactory.CreateDto(x));
-        }
-
-        public async Task<StudentDto> Get(int studentId)
-        {
-            var student = await _dbContext.Students.FirstOrDefaultAsync(x => x.StudentId == studentId);
-            if(student == null) throw new NotFoundException();
-            return _dtoFactory.CreateDto(student);
-        }
-
-        public async Task Delete(int studentId)
-        {
-            var student = await _dbContext.Students.FirstOrDefaultAsync(x => x.StudentId == studentId);
-            if(student == null) throw new NotFoundException();
-
-            _dbContext.Students.Remove(student);
+            _dbContext.Schools.Remove(school);
 
             await _dbContext.SaveChangesAsync();
         }
     }
+
+    
 }

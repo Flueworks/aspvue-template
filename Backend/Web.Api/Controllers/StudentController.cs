@@ -9,8 +9,6 @@ using School.Dto;
 using School.Entity;
 using School.Services;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Web.Api.Controllers
 {
     [ApiController]
@@ -27,7 +25,7 @@ namespace Web.Api.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<Student[]>> Get()
+        public async Task<ActionResult<StudentDto[]>> Get()
         {
             var students = await _studentService.GetAll();
             return Ok(students);
@@ -36,21 +34,21 @@ namespace Web.Api.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Student>> Get(int id)
+        public async Task<ActionResult<StudentDto>> Get(int id)
         {
             var student = await _studentService.Get(id);
             return Ok(student);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Student>> Post([FromBody] StudentInputDto input)
+        public async Task<ActionResult<StudentDto>> Post([FromBody] StudentInputDto input)
         {
             var student = await _studentService.Add(input);
             return CreatedAtAction(nameof(Get), new {id = student.StudentId}, student);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Student>> Put(int id, [FromBody] StudentInputDto update)
+        public async Task<ActionResult<StudentDto>> Put(int id, [FromBody] StudentInputDto update)
         {
             var dto = await _studentService.Update(id, update);
             return Ok(dto);

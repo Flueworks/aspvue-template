@@ -2,12 +2,12 @@
 
 namespace School.Dto
 {
-    public class TeacherInputDto : PersonDto
+    public class TeacherInputDto : PersonInputDto
     {
 
     }
 
-    public class StudentInputDto : PersonDto
+    public class StudentInputDto : PersonInputDto
     {
 
     }
