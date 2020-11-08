@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Core;
+using Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using School.Dto;
 using School.Entity;

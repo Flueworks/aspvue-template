@@ -1,6 +1,6 @@
 ﻿using NodaTime;
 
-namespace School.Entity
+namespace Core.Entities
 {
     public abstract class Person
     {

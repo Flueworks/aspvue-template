@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace School.Entity
+namespace Core.Entities
 {
     [Owned]
     public class Address

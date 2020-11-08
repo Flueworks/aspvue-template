@@ -1,11 +1,13 @@
-﻿using NodaTime;
-using School.Entity;
+﻿using System.ComponentModel.DataAnnotations;
+using Core.Entities;
+using NodaTime;
 
-namespace School.Dto
+namespace Core.Dto
 {
     public class PersonDto
     {
         public string GivenName { get; set; }
+
         public string FamilyName { get; set; }
 
         public Address Address { get; set; }
@@ -17,11 +19,16 @@ namespace School.Dto
 
     public class PersonInputDto
     {
+        [Required]
         public string GivenName { get; set; }
+
+        [Required]
         public string FamilyName { get; set; }
 
-        public Address Address { get; set; }
-
+        [Required]
         public LocalDate DateOfBirth { get; set; }
+
+
+        public Address Address { get; set; }
     }
 }
