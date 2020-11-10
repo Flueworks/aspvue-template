@@ -11,6 +11,5 @@ namespace Core.Entities
 
         public LocalDate DateOfBirth { get; set; }
         public int Age(LocalDate at) => Period.Between(DateOfBirth, at).Years;
-
     }
 }

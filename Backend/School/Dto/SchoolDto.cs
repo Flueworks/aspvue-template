@@ -4,30 +4,15 @@ using School.Entity;
 
 namespace School.Dto
 {
-    public class SchoolDto
-    {
-        public int SchoolId { get; set; }
-        public string Name { get; set; }
-        public Address Address { get; set; }
-    }
+    public record SchoolDto(int SchoolId, string Name, Address Address);
 
-    public class SchoolInputDto
-    {
-        [Required]
-        public string Name { get; set; }
-        public Address Address { get; set; }
-    }
+    public record SchoolInputDto([Required]string Name, Address Address);
 
     public class SchoolDtoFactory
     {
         public SchoolDto CreateDto(Entity.School school)
         {
-            return new SchoolDto()
-            {
-                Address = school.Address,
-                Name = school.Name,
-                SchoolId = school.SchoolId,
-            };
+            return new SchoolDto(school.SchoolId, school.Name, school.Address);
         }
     }
 }

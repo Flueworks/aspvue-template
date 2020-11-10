@@ -3,10 +3,5 @@
 namespace Core.Entities
 {
     [Owned]
-    public class Address
-    {
-        public string Lines { get; set; }
-        public string PostalCode { get; set; }
-        public string PostalPlace { get; set; }
-    }
+    public record Address(string Lines, string PostalCode, string PostalPlace);
 }

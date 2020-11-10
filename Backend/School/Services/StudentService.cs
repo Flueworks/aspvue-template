@@ -19,7 +19,6 @@ namespace School.Services
         Task<StudentDto> Get(int studentId);
 
         Task Delete(int studentId);
-
     }
 
     public class StudentService : IStudentService

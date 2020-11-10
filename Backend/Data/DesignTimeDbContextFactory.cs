@@ -25,7 +25,8 @@ namespace Data
 
             var connectionString = _configuration.GetConnectionString("DataContext");
 
-            builder.UseSqlServer(connectionString, o => o.UseNodaTime());
+            builder.AddInterceptors(new TimestampInterceptor())
+                   .UseSqlServer(connectionString, o => o.UseNodaTime());
             return new DataContext(builder.Options);
         }
     }

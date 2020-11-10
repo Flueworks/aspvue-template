@@ -8,7 +8,6 @@ using School.Services;
 namespace Web.Api.Controllers
 {
 
-
 namespace Web.Api.Controllers
 {
     [ApiController]
@@ -62,5 +61,4 @@ namespace Web.Api.Controllers
         }
     }
 }
-
 }

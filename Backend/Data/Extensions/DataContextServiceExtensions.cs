@@ -9,7 +9,8 @@ namespace Data.Extensions
     {
         public static IServiceCollection AddEntityFrameworkStorage(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString, x => x.UseNodaTime()));
+            services.AddDbContext<DataContext>(options => options.AddInterceptors(new TimestampInterceptor())
+                                                                 .UseSqlServer(connectionString, x => x.UseNodaTime()));
 
             services.AddScoped<ISchoolDbContext, DataContext>();
 

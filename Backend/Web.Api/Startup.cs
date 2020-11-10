@@ -28,18 +28,17 @@ namespace Web.Api
         {
             services.AddControllers(options => options.Filters.Add(new HttpResponseExceptionFilter()))
                 .AddJsonOptions(opt => opt.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb));
+
             services.AddOpenApiDocument();
 
             // Nodatime
             services.AddSingleton<IClock>(SystemClock.Instance);
-
 
             // Data storage
             services.AddEntityFrameworkStorage(Configuration.GetConnectionString("DataContext"));
 
             // Services
             services.AddSchoolServices();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +47,7 @@ namespace Web.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwaggerUi3();
             }
             else
             {
@@ -60,15 +60,9 @@ namespace Web.Api
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
 
             app.UseOpenApi();
-            app.UseSwaggerUi3();
-
         }
     }
 }

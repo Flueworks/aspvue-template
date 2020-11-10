@@ -6,13 +6,9 @@ using School.Entity;
 
 namespace School.Dto
 {
-    public class TeacherDto : PersonDto
-    {
-        public int TeacherId { get; set; }
-        
-    }
+    public record TeacherDto(int TeacherId, string GivenName, string FamilyName, Address Address, LocalDate DateOfBirth, int Age) : PersonDto(GivenName, FamilyName, Address, DateOfBirth, Age);
 
-    public class TeacherInputDto : PersonInputDto
+    public record TeacherInputDto : PersonInputDto
     {
 
     }
@@ -28,15 +24,14 @@ namespace School.Dto
 
         public TeacherDto CreateDto(Teacher teacher)
         {
-            return new TeacherDto()
-            {
-                DateOfBirth = teacher.DateOfBirth,
-                FamilyName = teacher.FamilyName,
-                GivenName = teacher.GivenName,
-                TeacherId = teacher.TeacherId,
-                Age = teacher.Age(_clock.InTzdbSystemDefaultZone().GetCurrentDate()),
-                Address = teacher.Address
-            };
+            return new TeacherDto(
+                teacher.TeacherId,
+                teacher.GivenName,
+                teacher.FamilyName,
+                teacher.Address,
+                teacher.DateOfBirth,
+                teacher.Age(_clock.InTzdbSystemDefaultZone().GetCurrentDate())
+            );
         }
     }
 }

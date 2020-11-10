@@ -4,31 +4,19 @@ using NodaTime;
 
 namespace Core.Dto
 {
-    public class PersonDto
-    {
-        public string GivenName { get; set; }
+    public record PersonDto(string GivenName, string FamilyName, Address Address, LocalDate DateOfBirth, int Age);
 
-        public string FamilyName { get; set; }
-
-        public Address Address { get; set; }
-
-        public LocalDate DateOfBirth { get; set; }
-
-        public int Age { get; set; }
-    }
-
-    public class PersonInputDto
+    public record PersonInputDto
     {
         [Required]
-        public string GivenName { get; set; }
+        public string GivenName { get; init; }
 
         [Required]
-        public string FamilyName { get; set; }
+        public string FamilyName { get; init; }
 
         [Required]
-        public LocalDate DateOfBirth { get; set; }
+        public LocalDate DateOfBirth { get; init; }
 
-
-        public Address Address { get; set; }
+        public Address Address { get; init; }
     }
 }

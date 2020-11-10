@@ -9,7 +9,6 @@ namespace School.Entity
 {
     public class Student : Person, ICreated, IUpdated
     {
-
         public int StudentId { get; set; }
 
 
@@ -18,7 +17,6 @@ namespace School.Entity
 
         public Instant Created { get; set; }
         public Instant Updated { get; set; }
-
     }
 
     public class Grade : ICreated, IUpdated
